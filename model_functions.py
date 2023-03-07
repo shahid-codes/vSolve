@@ -9,7 +9,7 @@ import streamlit as st
 
 @st.cache_resource
 def load_model(base_model_path,tuned_model_path):
-    model = AutoModelForQuestionAnswering.from_pretrained(base_model_path)
+    model = AutoModelForQuestionAnswering.from_pretrained(base_model_path,local_files_only=True)
     model = nn.DataParallel(model)
     device = torch.device("cpu")
     model = model.to(device)
