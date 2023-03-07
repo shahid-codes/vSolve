@@ -1,0 +1,8 @@
+services:
+  vsolve:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: vsolve
+    ports:
+      - "80:8051"
