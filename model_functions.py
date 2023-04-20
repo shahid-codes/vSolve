@@ -7,6 +7,14 @@ from utils import args
 import streamlit as st
 
 
+def checker(result):
+
+    start_character = result[0]
+    if start_character.isupper():
+        return result
+    else:
+        return result.capitalize()
+
 @st.cache_resource
 def load_model(base_model_path,tuned_model_path):
     model = AutoModelForQuestionAnswering.from_pretrained(base_model_path,local_files_only=True)
@@ -65,12 +73,15 @@ def postprocess(tokenizer,start_logits,end_logits,input_ids,n_best=30,max_answer
                 )
                 
     valid_answers = sorted(valid_answers,key = lambda x: x['score'],reverse=True)
-
+    
     result = valid_answers[0]['text']
     score = valid_answers[0]['score']
-
+    print(result,score)
     if score >= 5.0:
-        result = result.title()
+        result = result
 
     else:
         result =  "I'm sorry, I don't understand. Can you rephrase the question or ask something else?"
+
+    return checker(result)
+
